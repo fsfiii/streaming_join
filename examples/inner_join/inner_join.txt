@@ -1,0 +1,9 @@
+SELECT *
+  FROM employee INNER JOIN department 
+    ON employee.DepartmentID = department.DepartmentID;
+
+or using implicit syntax:
+
+SELECT *  
+FROM   employee, department 
+WHERE  employee.DepartmentID = department.DepartmentID;

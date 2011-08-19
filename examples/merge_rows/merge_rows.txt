@@ -1,0 +1,11 @@
+MySQL
+
+SELECT DepartmentID, group_concat(LastName) AS LastNames
+FROM   employee 
+GROUP BY DepartmentID;
+
+PostgreSQL 9+
+
+SELECT DepartmentID, string_agg(LastName, ', ') AS LastNames
+FROM   employee 
+GROUP BY DepartmentID;

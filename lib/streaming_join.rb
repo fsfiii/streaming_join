@@ -1,0 +1,6 @@
+require 'streaming_join/join.rb'
+require 'streaming_join/left_outer_join.rb'
+require 'streaming_join/right_outer_join.rb'
+require 'streaming_join/full_outer_join.rb'
+require 'streaming_join/cross_join.rb'
+require 'streaming_join/merge_rows.rb'

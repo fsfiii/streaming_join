@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo standard process form
+cat ../join_input.tsv | ruby -I../../lib ij-reducer.rb
+
+echo block process form
+cat ../join_input.tsv | ruby -I../../lib ij-reducer.rb

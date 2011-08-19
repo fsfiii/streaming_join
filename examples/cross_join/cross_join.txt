@@ -1,0 +1,7 @@
+SELECT *
+FROM   employee CROSS JOIN department;
+
+or an implicit cross join:
+
+SELECT *
+FROM   employee, department;

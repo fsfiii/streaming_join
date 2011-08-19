@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export streaming_join_cols_left=1
+export streaming_join_cols_right=1
+
+cat ../join_input.tsv | ruby -I../../lib foj-reducer.rb

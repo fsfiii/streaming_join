@@ -1,0 +1,47 @@
+#!/bin/bash
+
+[ -f /etc/profile.d/hadoop.sh ] && . /etc/profile.d/hadoop.sh
+cd $(dirname $0)
+
+# CONFIGURATION SECTION
+NAME="streaming join test"
+PROJ=join
+INPUT_L=base_data_left.txt
+INPUT_R=base_data_right.txt
+OUTPUT=output/$PROJ
+MAPPER=$PROJ-mapper.rb
+REDUCER=$PROJ-reducer.rb
+REDUCERS=1
+# END CONFIGURATION SECTION
+
+RUBY='/usr/local/jruby/bin/jruby -EASCII-8BIT --1.9 --fast --server'
+RUBY='/usr/local/ruby19/bin/ruby -EASCII-8BIT'
+
+echo placing the sample data in HDFS...
+hadoop fs -put $INPUT_L .
+hadoop fs -put $INPUT_R .
+
+echo removing any existing output directory...
+hadoop fs -rmr $OUTPUT >&/dev/null
+
+hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-*.jar \
+  -D mapred.job.name="$NAME" \
+  -D mapred.reduce.tasks=$REDUCERS \
+  -input "$INPUT_L" \
+  -input "$INPUT_R" \
+  -output "$OUTPUT" \
+  -mapper "$RUBY ${MAPPER##*/}" \
+  -file $MAPPER \
+  -reducer "$RUBY ${REDUCER##*/}" \
+  -file $REDUCER
+
+JOB_STATUS=$?
+
+if [ $JOB_STATUS -ne 0 ]; then
+  echo error: job exited with status $JOB_STATUS >&2
+else
+  echo info: job complete...output can be found in $OUTPUT
+  hadoop fs -cat $OUTPUT/part*
+fi
+
+exit $JOB_STATUS

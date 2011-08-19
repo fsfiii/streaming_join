@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cat mr_input.tsv | ruby -I../../lib mr-reducer.rb

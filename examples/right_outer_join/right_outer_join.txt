@@ -1,0 +1,3 @@
+SELECT * 
+FROM   employee RIGHT OUTER JOIN department 
+          ON employee.DepartmentID = department.DepartmentID;

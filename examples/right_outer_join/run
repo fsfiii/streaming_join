@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export streaming_join_cols_left=1
+
+cat ../join_input.tsv | ruby -I../../lib roj-reducer.rb

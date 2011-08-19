@@ -1,0 +1,23 @@
+streaming_join
+
+Ruby classes intended to be used in Hadoop Streaming reducers.  It
+has been tested with jruby 1.6+ and ruby 1.9.2+.
+
+Examples (found in the examples directory) use the test data and
+scenarios from here:
+
+http://en.wikipedia.org/wiki/Join_(SQL)
+
+The equivalent sql for each example is listed in its directory.  The
+supported join types are:
+
+inner_join
+cross_join
+left_outer_join
+right_outer_join
+full_outer_join
+merge_rows
+
+Please let me know if you find this software useful!
+
+--frank
