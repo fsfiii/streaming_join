@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.authors = ["Frank Fejes"]
   s.email = 'frank@fejes.net'
   s.summary =
-    'Classes to process joins in Hadoop Streaming'
+    'Classes to process joins in Hadoop Map/Reduce Streaming'
   s.homepage = 'https://github.com/fsfiii/streaming_join'
   s.description =
-    'Classes to process various joins in Hadoop Streaming.'
+    'Classes to process various joins in Hadoop Map/Reduce Streaming.'
   s.files = [
     "README",
     "CHANGELOG",
