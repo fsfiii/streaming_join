@@ -18,6 +18,57 @@ right_outer_join
 full_outer_join
 merge_rows
 
+API
+
+As with most map/reduce jobs, there are two basic components:
+
+Mapper
+
+The mapper in a streaming_join job outputs records of the form:
+
+key TAB side_index TAB value
+
+The "left" side uses side_index 0 while the right side would use 1.
+
+In a simple join, here is one example mapper output:
+
+1	0	Matsumoto
+2	0	Wall
+3	0	van Rossum
+
+Here is the other side's output:
+
+1	1	Ruby	1995
+2	1	Perl	1987
+4	1	Clojure	2007
+
+Reducer
+
+Depending on the join style, the reducer will emit combined records.  Using
+the above mapper output, an inner join would end up like:
+
+1	Matsumoto	Ruby
+2	Wall	Perl
+
+The code would look something like this:
+
+Mapper
+
+require 'streaming_join'
+
+j = JoinMapper.new
+j.add_side(/_left/, 0, 1)
+j.add_side(/_right/, 0, 1)
+j.process_stream
+
+Reducer
+
+require 'streaming_join'
+
+Join.new.process_stream
+
+See examples/job_full for more detail and comments.
+
 Please let me know if you find this software useful!
 
 --frank
