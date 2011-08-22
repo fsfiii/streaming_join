@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export map_input_file=base_data_left.txt
+export map_input_file=base_data_right.txt
+
+cat $map_input_file | ruby -I../../lib join-mapper.rb

@@ -1,2 +1,7 @@
-* 2011-08-19 - fsf
+* 2011-08-22 - fsfiii
+- new: add JoinMapper class, intended to be used as the mapper portion
+- new: added examples/job_full which runs an entire job with both map and
+       reduce sides using the framework
+
+* 2011-08-19 - fsfiii
 - initial import
