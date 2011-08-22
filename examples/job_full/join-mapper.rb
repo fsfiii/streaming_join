@@ -2,14 +2,18 @@ require 'streaming_join'
 
 j = JoinMapper.new
 
-# take column 0 and column 1 from the left (key is the first)
+# For our first side (beginning on the left), use the input filename
+# matching the regular expression of /_left/.
+# Take column 0 and column 1 from that file (key is the first). 
 j.add_side(/_left/, 0, 1)
-# take columns 0, 1, and 2 from the right
-# also add a filter (reindexed by output columns)
+
+# For the right side, use the input filename matching /_right/.
+# Take columns 0, 1, and 3.
+# Also add a filter (reindexed by output columns).
 j.add_side(/_right/, 0, 1, 2) {|c| c[2].to_i < 2000}
 
-# add an option for the right side
-# tab already is the default separator, so this is just an example
+# Add an option for the right side.
+# (tab already is the default separator, so this is just an example)
 j.add_opts(/_right/, sep: "\t")
 
 # process the STDIN loop
