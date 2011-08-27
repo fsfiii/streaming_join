@@ -48,7 +48,7 @@ class Join
         # if we are on the left side and just processed the left side
         # of another key, we didn't get any right side records
         if last_key != key and last_side == 0
-          report 'null right' if last_key != key
+          report 'null right'
           null_right last_key, left
         end
 
@@ -63,7 +63,7 @@ class Join
           report 'null left' if last_key != key
           null_left key, value
         else
-          report 'left and right' if last_key != key
+          report 'left and right' if last_side == 0
           output key, left, value
         end
       end

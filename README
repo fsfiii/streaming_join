@@ -69,6 +69,13 @@ Join.new.process_stream
 
 See examples/job for more detail and comments.
 
+Current Limitations
+
+- As each key is processed in a reducer, the left side of that single
+  keyspace must fit into memory.  So, when in doubt, put the smaller
+  table on the left.
+- Only two tables can be joined in a single job.
+
 Please let me know if you find this software useful!
 
 --frank
