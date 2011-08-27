@@ -77,6 +77,19 @@ Current Limitations
 - Only two tables can be joined in a single job.
 - Cartesian joins use way too much memory.  Not a priority right now. ;)
 
+Other Notes
+
+- The custom counters used to report statistics could in some
+  circumstances add a non-negligible amount of time to the processing
+  of massive datasets.  To disable this feature, pass the optional hash
+  when initializing a join object.
+
+  Join.new(report: false).process_stream
+
+  instead of:
+
+  Join.new.process_stream
+  
 Please let me know if you find this software useful!
 
 --frank
