@@ -43,8 +43,6 @@ class Join
 
       side = side.to_i
       if side == 0
-        #puts "LEFT: #{line}"
-        #puts "last_key: #{last_key}"
         # if we are on the left side and just processed the left side
         # of another key, we didn't get any right side records
         if last_key != key and last_side == 0
@@ -62,6 +60,7 @@ class Join
         if not last_key or last_key != key or left.empty?
           report 'null left' if last_key != key
           null_left key, value
+          left = []
         else
           report 'left and right' if last_side == 0
           output key, left, value
