@@ -12,47 +12,63 @@ class Join
     STDERR.puts "reporter:counter:join,#{detail},1"
   end
 
-  def output key
-    report 'keys'
-
-    left,right = @join
-    if not left
-      report 'null left'
-      return
-    elsif not right
-      report 'null right'
-      return
-    end
-
+  def output key, left, right
     left.each do |l|
       report 'left and right'
-      right.each do |r|
-        o = "#{key}#{@sep_out}#{l}#{@sep_out}#{r}"
-        if block_given?
-          yield o
-        else
-          puts o
-        end
+      o = "#{key}#{@sep_out}#{l}#{@sep_out}#{right}"
+      if block_given?
+        yield o
+      else
+        puts o
       end
     end
   end
 
+  def null_left key
+    report 'null left'
+  end
+
+  def null_right key
+    report 'null right'
+  end
+
   def process_stream(input = STDIN, &blk)
     last_key = key = nil
-    @join = []
+    last_side = left = nil
 
     input.each do |line|
       key, side, value = line.chomp.split(@sep_in, 3)
 
-      if last_key and last_key != key
-        output(last_key, &blk)
-        @join = []
+      report 'keys' if last_key != key
+
+      side = side.to_i
+      if side == 0
+        #puts "LEFT: #{line}"
+        #puts "last_key: #{last_key}"
+        if last_key != key
+          left = []
+        end
+        left << value
+
+        # if we are on the left side and just processed the left side
+        # of another key, we didn't get any right side records
+        if last_key != key and last_side == 0
+          null_right last_key
+        end
+      else
+        # if we're in a new key and the first record is a right side
+        # record, that means we never processed a left side
+        if not last_key or last_key != key or left.empty?
+          null_left last_key
+        else
+          output key, left, value
+        end
       end
 
-      (@join[side.to_i] ||= []) << value
+      last_side = side
       last_key = key
     end
 
-    output(last_key, &blk) if key
+    null_right(key) if last_side == 0
   end
 end
