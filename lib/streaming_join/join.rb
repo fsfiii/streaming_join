@@ -16,7 +16,6 @@ class Join
 
   def output key, left, right
     left.each do |l|
-      report 'left and right'
       o = "#{key}#{@sep_out}#{l}#{@sep_out}#{right}"
       if block_given?
         yield o
@@ -27,11 +26,9 @@ class Join
   end
 
   def null_left key, right
-    report 'null left'
   end
 
   def null_right key, left
-    report 'null right'
   end
 
   def process_stream(input = STDIN, &blk)
@@ -51,6 +48,7 @@ class Join
         # if we are on the left side and just processed the left side
         # of another key, we didn't get any right side records
         if last_key != key and last_side == 0
+          report 'null right' if last_key != key
           null_right last_key, left
         end
 
@@ -62,8 +60,10 @@ class Join
         # if we're in a new key and the first record is a right side
         # record, that means we never processed a left side
         if not last_key or last_key != key or left.empty?
+          report 'null left' if last_key != key
           null_left key, value
         else
+          report 'left and right' if last_key != key
           output key, left, value
         end
       end
@@ -72,6 +72,11 @@ class Join
       last_key = key
     end
 
-    null_right(key, left) if last_side == 0
+    # if the last processed record is on the left, there is
+    # not going to be a right side
+    if last_side == 0
+      report 'null right'
+      null_right(key, left)
+    end
   end
 end

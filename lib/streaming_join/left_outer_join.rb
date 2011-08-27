@@ -2,7 +2,6 @@ require 'streaming_join/join'
 
 class LeftOuterJoin < Join
   def null_right key, left
-    report 'null right'
     o = "#{key}#{@sep_out}"
 
     left.each do |l|

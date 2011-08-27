@@ -2,7 +2,6 @@ require 'streaming_join/join'
 
 class RightOuterJoin < Join
   def null_left key, right
-    report 'null left'
     o = "#{key}#{@sep_out}"
 
     if @cols_l > 0

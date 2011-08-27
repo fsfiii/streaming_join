@@ -2,7 +2,6 @@ require 'streaming_join/join'
 
 class FullOuterJoin < Join
   def null_right key, left
-    report 'null right'
     o = "#{key}#{@sep_out}"
 
     left.each do |l|
@@ -17,7 +16,6 @@ class FullOuterJoin < Join
   end
 
   def null_left key, right
-    report 'null left'
     o = "#{key}#{@sep_out}"
 
     if @cols_l > 0
