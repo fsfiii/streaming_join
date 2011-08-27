@@ -75,6 +75,7 @@ Current Limitations
   keyspace must fit into memory.  So, when in doubt, put the smaller
   table on the left.
 - Only two tables can be joined in a single job.
+- Cartesian joins use way too much memory.  Not a priority right now. ;)
 
 Please let me know if you find this software useful!
 
