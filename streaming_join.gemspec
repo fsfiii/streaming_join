@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = 'streaming_join'
   s.rubyforge_project = 'streaming_join'
-  s.version = '0.2.9'
+  s.version = '0.3.0'
   s.date = '2011-08-27'
   s.authors = ["Frank Fejes"]
   s.email = 'frank@fejes.net'
