@@ -24,6 +24,8 @@ hadoop fs -put $INPUT_R .
 echo removing any existing output directory...
 hadoop fs -rmr $OUTPUT >&/dev/null
 
+# need to use key based comparator in order to guarantee the records
+# on the left side of the join are processed before the right side
 COMPARATOR=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator
 # sort key (string) then by join side (numeric ascending)
 COMP_OPTS='-k1,1 -k2,2n'

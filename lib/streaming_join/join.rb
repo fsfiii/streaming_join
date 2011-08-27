@@ -36,7 +36,8 @@ class Join
 
   def process_stream(input = STDIN, &blk)
     last_key = key = nil
-    last_side = left = nil
+    last_side = nil
+    left = []
 
     input.each do |line|
       key, side, value = line.chomp.split(@sep_in, 3)
