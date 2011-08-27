@@ -5,6 +5,8 @@ class Join
     @sep_out = ENV['streaming_join_output_separator'] || "\t"
     @sep_out = $1.hex.chr if @sep_out =~ /\A(?:\\u?)?(\d+)\Z/
     @report  = opts.fetch :report, true
+    @cols_l  = ENV['streaming_join_cols_left'].to_i
+    @cols_r  = ENV['streaming_join_cols_right'].to_i
   end
 
   def report detail
@@ -24,11 +26,11 @@ class Join
     end
   end
 
-  def null_left key
+  def null_left key, right
     report 'null left'
   end
 
-  def null_right key
+  def null_right key, left
     report 'null right'
   end
 
@@ -45,21 +47,21 @@ class Join
       if side == 0
         #puts "LEFT: #{line}"
         #puts "last_key: #{last_key}"
+        # if we are on the left side and just processed the left side
+        # of another key, we didn't get any right side records
+        if last_key != key and last_side == 0
+          null_right last_key, left
+        end
+
         if last_key != key
           left = []
         end
         left << value
-
-        # if we are on the left side and just processed the left side
-        # of another key, we didn't get any right side records
-        if last_key != key and last_side == 0
-          null_right last_key
-        end
       else
         # if we're in a new key and the first record is a right side
         # record, that means we never processed a left side
         if not last_key or last_key != key or left.empty?
-          null_left last_key
+          null_left key, value
         else
           output key, left, value
         end
@@ -69,6 +71,6 @@ class Join
       last_key = key
     end
 
-    null_right(key) if last_side == 0
+    null_right(key, left) if last_side == 0
   end
 end
