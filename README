@@ -67,7 +67,7 @@ require 'streaming_join'
 
 Join.new.process_stream
 
-See examples/job_full for more detail and comments.
+See examples/job for more detail and comments.
 
 Please let me know if you find this software useful!
 

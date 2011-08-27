@@ -5,6 +5,7 @@
           a time, only) and the right side will be processed as values are
           read in.  This now requires KeyFieldBasedPartioner so that the
           values are sorted left side first.
+- clean: removed example/job and renamed example/job_full to example/job
 - new: add opts passing to Join class
 - new: add :report opt for Join class to control reporting of key stats
 

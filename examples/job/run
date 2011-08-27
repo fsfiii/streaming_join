@@ -24,9 +24,20 @@ hadoop fs -put $INPUT_R .
 echo removing any existing output directory...
 hadoop fs -rmr $OUTPUT >&/dev/null
 
+COMPARATOR=org.apache.hadoop.mapred.lib.KeyFieldBasedComparator
+# sort key (string) then by join side (numeric ascending)
+COMP_OPTS='-k1,1 -k2,2n'
+
 hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-streaming-*.jar \
   -D mapred.job.name="$NAME" \
   -D mapred.reduce.tasks=$REDUCERS \
+  -D stream.map.output.field.separator="$(printf '\t')" \
+  -D stream.num.map.output.key.fields=2 \
+  -D map.output.key.field.separator="$(printf '\t')" \
+  -D mapred.output.key.comparator.class=$COMPARATOR \
+  -D mapred.text.key.comparator.options="$COMP_OPTS" \
+  -D mapred.text.key.partitioner.options=-k1 \
+  -D num.key.fields.for.partition=1 \
   -input "$INPUT_L" \
   -input "$INPUT_R" \
   -output "$OUTPUT" \

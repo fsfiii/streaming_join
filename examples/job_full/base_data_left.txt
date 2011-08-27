@@ -1,5 +1,0 @@
-1	Matsumoto	Yukihiro
-2	Wall	Larry
-3	van Rossum	Guido
-4	Hickey	Rich
-5	Linus	Torvalds
