@@ -1,4 +1,10 @@
 * 2011-08-27 - fsfiii
+- update: Redesigned join logic so as to not read individual keyspaces
+          into memory since this simply won't scale.  Now only the left
+          side of a keyspace will be placed into memory (one keyspace at
+          a time, only) and the right side will be processed as values are
+          read in.  This now requires KeyFieldBasedPartioner so that the
+          values are sorted left side first.
 - new: add opts passing to Join class
 - new: add :report opt for Join class to control reporting of key stats
 
