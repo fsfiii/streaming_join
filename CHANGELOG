@@ -1,3 +1,7 @@
+* 2011-08-27 - fsfiii
+- new: add opts passing to Join class
+- new: add :report opt for Join class to control reporting of key stats
+
 * 2011-08-22 - fsfiii
 - new: add JoinMapper class, intended to be used as the mapper portion
 - new: added examples/job_full which runs an entire job with both map and

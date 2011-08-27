@@ -1,12 +1,14 @@
 # base Join class (inner join)
 class Join
-  def initialize
+  def initialize opts = {}
     @sep_in  = ENV['stream_map_output_field_separator'] || "\t"
     @sep_out = ENV['streaming_join_output_separator'] || "\t"
     @sep_out = $1.hex.chr if @sep_out =~ /\A(?:\\u?)?(\d+)\Z/
+    @report  = opts.fetch :report, true
   end
 
   def report detail
+    return if not @report
     STDERR.puts "reporter:counter:join,#{detail},1"
   end
 

@@ -10,6 +10,7 @@ j.add_side(/_left/, 0, 1)
 # For the right side, use the input filename matching /_right/.
 # Take columns 0, 1, and 3.
 # Also add a filter (reindexed by output columns).
+# Records for which the block returns false will be discarded.
 j.add_side(/_right/, 0, 1, 2) {|c| c[2].to_i < 2000}
 
 # Add an option for the right side.
